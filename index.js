@@ -4,6 +4,7 @@ const qrcode = require('qrcode');
 const app = express();
 const port = process.env.PORT || 5000; // Use environment variable for port or default to 5000
 
+//Example URL: https://localhost:5000/qr/test-qr-string?width=200&height=200
 app.get('/qr/:data', async (req, res) => {
     const { data } = req.params;
     const { width, height } = req.query;
