@@ -2,7 +2,6 @@ const express = require('express');
 const qrcode = require('qrcode');
 const jsBarcode = require('jsbarcode');
 const { Canvas } = require("canvas");
-const { barcodeFormats } = require("./barcodeDefine");
 const app = express();
 const port = process.env.PORT || 5000; // Use environment variable for port or default to 5000
 
@@ -37,13 +36,13 @@ app.get('/qr/:data', async (req, res) => {
 app.get('/barcode/:text', async (req, res) => {
     const { text } = req.params;
     const { width, height, format = "CODE128" } = req.query;
+    const barcodeFormats = ["CODE128"];
     if (!barcodeFormats.includes(format)) {
         res.statusCode = 400;
         return res.send("invalid format");
     }
-    let widthInt, heightInt;
-    widthInt = width ? parseInt(width) : 2;
-    heightInt = height ? parseInt(height) : 80;
+    const widthInt = width ? parseInt(width) : 2;
+    const heightInt = height ? parseInt(height) : 80;
     const canvas = new Canvas();
     jsBarcode(canvas, text, {
         format: format,
